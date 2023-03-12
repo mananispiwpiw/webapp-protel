@@ -21,13 +21,14 @@ body {
   height: 768px;
   background: url("/public/assets/images/v2_4.png");
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: left;
   background-size: cover;
   opacity: 1;
   position: absolute;
   top: 0px;
-  left: 344px;
+  left: -346px;
   overflow: hidden;
+  float: left;
 }
 .v2_5 {
   width: 650px;
