@@ -3,13 +3,54 @@
     <head>
         <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
         <link href="/public/assets/styleMain.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div class="v4_21">
-            <div class="v4_22"></div>
-            <div class="v4_30">
-                <div class="v4_25"></div>
-                <div class="v4_26"></div>
+        <!-- Sidebar -->            
+        <nav>
+            <li>
+                <a href="/views/main/main.html">
+                    <i class="fas dashboard"></i>
+                    <img src="/public/assets/images/icon_dashboard.svg" class="dashboardLogo" alt="">
+                    <span class="nav-item">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/views/graph/graph.html">
+                    <i class="fas graph"></i>
+                    <img src="/public/assets/images/icon_graph.svg" alt="">
+                    <span class="nav-item">Graph</span>
+                </a>
+            </li>
+            <li>
+                <a href="/views/table/table.html">
+                    <i class="fas table"></i>
+                    <img src="/public/assets/images/icon_table.svg" alt="">
+                    <span class="nav-item">Table</span>
+                </a>
+            </li>
+        </nav>
+        <!--Charts Card-->
+        <div class="charts">
+            <div class="charts-card">
+                <p class="chart-title">Data Graph</p>
+                <div id="line-chart"></div>
             </div>
-            <div class="v5_31"></div>
-            <span class="v5_32">Log out</span><div class="v5_33"></div><div class="v5_34"></div><span class="v5_36">GRAPH</span><div class="v6_49"></div></div></body></html> <br/><br/>
+        </div>
+
+        <div class="card">
+            <div class="card-box">
+                <p class="card-title">Status</p>
+            </div>
+            <div class="card-box">
+                <p class="card-title">Table</p>
+            </div>
+        </div>
+        <!--Scripts-->
+        <!-- ApexCharts -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="/views/main/mainScript.js"></script>
+    </body>
+</html> 
