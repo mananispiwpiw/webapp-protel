@@ -1,3 +1,31 @@
+//Fetch API
+//Define the url we want to fetch from
+const apiUrl = 'http://localhost:3000/api/post/sensor'
+
+//Define the function that fetches the data
+async function getSensorData(){
+  try{ 
+    // Make GET request to API endpoint
+    const response = await fetch(apiUrl);
+
+    //check if the request was successful (status code 200)
+    if (!response.ok){
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    //Parse the JSON data from the response
+    const data = await response.json();
+
+    //Use the sensor data (e.g. display it)
+    console.log('Sensor data: ',data);
+  } catch (error){
+    console.log('Error fetching data',error);
+  }
+}
+
+//Call the function
+getSensorData();
+
 // CHARTS
 var lineChartOptions = {
     chart: {
