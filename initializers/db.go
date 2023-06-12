@@ -15,6 +15,12 @@ type SensorData struct {
 	Value     float64   `gorm:"not null"`
 }
 
+type PredictedData struct {
+	ID         uint      `gorm:"primaryKey"`
+	PTimestamp time.Time `gorm:"not null"`
+	PValue     float64   `gorm:"not null"`
+}
+
 var DB *gorm.DB
 
 func ConnectToDatabase() error {
@@ -27,7 +33,7 @@ func ConnectToDatabase() error {
 		return err
 	}
 
-	err = db.AutoMigrate(&SensorData{})
+	err = db.AutoMigrate(&SensorData{}, &PredictedData{})
 	if err != nil {
 		fmt.Println("Failed to migrate database")
 		return err

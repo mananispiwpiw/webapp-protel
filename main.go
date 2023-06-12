@@ -17,7 +17,12 @@ type SensorData struct {
 	PotensioValue float64 `json:"potensioValue"`
 }
 
+type PredictedData struct {
+	PredictedValue float64 `json:"predictedValue"`
+}
+
 var lastSensorValue float64
+var lastPredictedValue float64
 
 func main() {
 	//create new fiber app
@@ -36,7 +41,30 @@ func main() {
 	// Add a static file handler: Serve files from the "./public" directory
 	app.Static("/", "./public")
 
-	//POST method
+	//POST predictedValue method
+	app.Post("/api/post/predict", func(c *fiber.Ctx) error {
+		predictedData := new(PredictedData)
+
+		if err := c.BodyParser(predictedData); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
+		}
+		lastPredictedValue = predictedData.PredictedValue
+
+		newPredictedValue := &initializers.PredictedData{
+			PTimestamp: time.Now(),
+			PValue:     lastPredictedValue,
+		}
+
+		//Insert the data to the database
+		result := initializers.DB.Create(&newPredictedValue)
+		if result.Error != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Couldn't insert data to database"})
+		}
+		fmt.Printf("Received predicted value: %f\n", lastPredictedValue)
+		return c.JSON(fiber.Map{"status": "success", "message": "Received predicted data"})
+	})
+
+	//POST sensor method
 	app.Post("/api/post/sensor", func(c *fiber.Ctx) error {
 		sensorData := new(SensorData)
 

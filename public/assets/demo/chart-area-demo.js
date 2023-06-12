@@ -54,54 +54,83 @@ var myLineChart = new Chart(ctx, {
     }
 });
 
+// function updateChart(data) {
+//   try {
+//     console.log("Updating chart with data:", data);
+//     // Parse the timestamps using moment.js and sort the data by timestamp (newest to oldest)
+//     data = data.map(d => ({...d, Timestamp: moment(d.Timestamp)})).sort((a, b) => b.Timestamp.diff(a.Timestamp));
+
+//     // Extract x and y values from the fetched data
+//     const timestamps = data.map(d => moment(d.Timestamp));
+//     const values = data.map(d => d.Value);
+
+//     //Format the timestamps
+//     //const formattedTimestamps = timestamps.map(t => t.format('HH:mm:ss (DD/MM/YYYY)')).reverse();
+//     const formattedTimestamps = timestamps.map(t => t.format('HH:mm:ss'));
+//     // Reverse the values array so they match the order of the timestamps
+//     //const reversedValues = values.reverse();
+//     // Remove old data points from the chart
+//     while (myLineChart.data.labels.length >= MAX_DATA_POINTS) {
+//       myLineChart.data.labels.shift();
+//       myLineChart.data.datasets[0].data.shift();
+//     }
+    
+
+//     // Add the new data points to the chart
+//     myLineChart.data.labels.push(...formattedTimestamps); 
+//     myLineChart.data.datasets[0].data.push(...values);
+
+//     // Remove old data points if there are too many
+//     // if (myLineChart.data.labels.length > MAX_DATA_POINTS) {
+//     //     myLineChart.data.labels.splice(0, myLineChart.data.labels.length - MAX_DATA_POINTS);
+//     //     myLineChart.data.datasets[0].data.splice(0, myLineChart.data.datasets[0].data.length - MAX_DATA_POINTS);
+//     // }
+//      // Check if chart is already populated
+//      if (myLineChart.data.labels.length > 0) {
+//         // Replace existing data with new data
+//         myLineChart.data.labels = formattedTimestamps;
+//         myLineChart.data.datasets[0].data = values;
+//     } else {
+//         // Append new data to the chart
+//         myLineChart.data.labels.push(...formattedTimestamps);
+//         myLineChart.data.datasets[0].data.push(...values);
+//     }
+    
+//     // Update the chart
+//     myLineChart.update();
+// } catch(error){
+//   console.error('Error updating chart:', error);
+// }
+// }
+
 function updateChart(data) {
-  try {
-    console.log("Updating chart with data:", data);
-    // Parse the timestamps using moment.js and sort the data by timestamp (newest to oldest)
-    data = data.map(d => ({...d, Timestamp: moment(d.Timestamp)})).sort((a, b) => b.Timestamp.diff(a.Timestamp));
-
-    // Extract x and y values from the fetched data
-    const timestamps = data.map(d => moment(d.Timestamp));
-    const values = data.map(d => d.Value);
-
-    //Format the timestamps
-    //const formattedTimestamps = timestamps.map(t => t.format('HH:mm:ss (DD/MM/YYYY)')).reverse();
-    const formattedTimestamps = timestamps.map(t => t.format('HH:mm:ss'));
-    // Reverse the values array so they match the order of the timestamps
-    //const reversedValues = values.reverse();
-    // Remove old data points from the chart
-    while (myLineChart.data.labels.length >= MAX_DATA_POINTS) {
-      myLineChart.data.labels.shift();
-      myLineChart.data.datasets[0].data.shift();
+    try {
+      // Parse the timestamps using moment.js and sort the data by timestamp (newest to oldest)
+      data = data.map(d => ({...d, Timestamp: moment(d.Timestamp)})).sort((a, b) => b.Timestamp.diff(a.Timestamp));
+  
+      // Extract x and y values from the fetched data
+      const timestamps = data.map(d => moment(d.Timestamp));
+      const values = data.map(d => d.Value);
+  
+      // Ensure we only show the 20 newest data points
+      const newestTimestamps = timestamps.slice(0, 20);
+      const newestValues = values.slice(0, 20);
+  
+      // Format the timestamps
+      const formattedTimestamps = newestTimestamps.map(t => t.format('HH:mm:ss'));
+  
+      // Remove old data points from the chart
+      myLineChart.data.labels = formattedTimestamps;
+      myLineChart.data.datasets[0].data = newestValues;
+  
+      // Update the chart
+      myLineChart.update();
+    } catch(error) {
+      console.error('Error updating chart:', error);
     }
-    
-
-    // Add the new data points to the chart
-    myLineChart.data.labels.push(...formattedTimestamps); 
-    myLineChart.data.datasets[0].data.push(...values);
-
-    // Remove old data points if there are too many
-    // if (myLineChart.data.labels.length > MAX_DATA_POINTS) {
-    //     myLineChart.data.labels.splice(0, myLineChart.data.labels.length - MAX_DATA_POINTS);
-    //     myLineChart.data.datasets[0].data.splice(0, myLineChart.data.datasets[0].data.length - MAX_DATA_POINTS);
-    // }
-     // Check if chart is already populated
-     if (myLineChart.data.labels.length > 0) {
-        // Replace existing data with new data
-        myLineChart.data.labels = formattedTimestamps;
-        myLineChart.data.datasets[0].data = values;
-    } else {
-        // Append new data to the chart
-        myLineChart.data.labels.push(...formattedTimestamps);
-        myLineChart.data.datasets[0].data.push(...values);
-    }
-    
-    // Update the chart
-    myLineChart.update();
-} catch(error){
-  console.error('Error updating chart:', error);
-}
-}
+  }
+  
+  
 
 // Start fetching data every 3 seconds
 setInterval(() => {
