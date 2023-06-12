@@ -11241,3 +11241,30 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+/* custom.css */
+/* Styles for table */
+#streamingDataTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+#streamingDataTable th,
+#streamingDataTable td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Set column widths */
+#streamingDataTable th:nth-child(1),
+#streamingDataTable td:nth-child(1) {
+    width: 20%; /* DeviceID column */
+}
+#streamingDataTable th:nth-child(2),
+#streamingDataTable td:nth-child(2) {
+    width: 60%; /* Value column */
+}
+#streamingDataTable th:nth-child(3),
+#streamingDataTable td:nth-child(3) {
+    width: 20%; /* Timestamp column */
+}

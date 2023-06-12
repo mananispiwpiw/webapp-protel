@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
@@ -22,6 +23,18 @@ func main() {
 	//create new fiber app
 	app := fiber.New()
 	app.Use(logger.New())
+
+	//CORS
+	// Add CORS middleware to allow cross-origin requests
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "*",
+		AllowMethods:     "GET,POST",
+		AllowHeaders:     "*",
+		AllowCredentials: true,
+	}))
+
+	// Add a static file handler: Serve files from the "./public" directory
+	app.Static("/", "./public")
 
 	//POST method
 	app.Post("/api/post/sensor", func(c *fiber.Ctx) error {
@@ -51,9 +64,13 @@ func main() {
 
 	//GET method
 	app.Get("/api/get/sensor", func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{
-			"potensioValue": lastSensorValue,
-		})
+		var sensorData []initializers.SensorData
+
+		err := initializers.DB.Order("timestamp desc").Find(&sensorData).Error
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Couldn't get data from database"})
+		}
+		return c.JSON(fiber.Map{"status": "success", "data": sensorData})
 	})
 
 	//Database Things
