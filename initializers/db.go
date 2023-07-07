@@ -16,16 +16,17 @@ type SensorData struct {
 }
 
 type PredictedData struct {
-	ID         uint      `gorm:"primaryKey"`
-	PTimestamp time.Time `gorm:"not null"`
-	PValue     float64   `gorm:"not null"`
+	ID        uint      `gorm:"primaryKey"`
+	DeviceID  string    `gorm:"not null"`
+	Timestamp time.Time `gorm:"not null"`
+	PValue    float64   `gorm:"not null"`
 }
 
 var DB *gorm.DB
 
 func ConnectToDatabase() error {
 	//var err error
-	dsn := "host=localhost user=postgres password=admin dbname=protelGaming port=5432"
+	dsn := "host=localhost user=rafi password=admin123 dbname=protelGaming port=5432"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {

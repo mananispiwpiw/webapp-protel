@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Charts - SB Admin</title>
+        <title>Charts Section</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -70,30 +70,30 @@
                                 <b>Section Charts</b> pada website monitoring pergeseran tanah IoT menyajikan grafik line chart yang memberikan visualisasi yang jelas tentang perubahan tingkat pergeseran tanah dari waktu ke waktu. Grafik line chart ini memungkinkan pengguna untuk mengamati tren jangka panjang, fluktuasi harian, serta mengidentifikasi perubahan signifikan dalam pergeseran tanah.
                             </div>
                         </div>
+                        <!--Chart for live data-->
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
                                 Area Chart <b>Live Data</b>
                             </div>
                             <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                        </div>
+                        <!--Charts for predicted value-->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Area Chart <b>Predicted Data</b>
+                            </div>
+                            <div class="card-body"><canvas id="myAreaChartP" width="100%" height="30"></canvas></div> 
                         </div>
                         <div class="row">
-                          
+
                            
                         </div>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
                     </div>
                 </footer>
             </div>
@@ -102,7 +102,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js" type="module"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-pie-demo.js"></script>
+        <script src="/assets/demo/chart-area-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
 </html>

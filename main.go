@@ -40,6 +40,10 @@ func main() {
 
 	// Add a static file handler: Serve files from the "./public" directory
 	app.Static("/", "./public")
+	// Add a satic file handler: Serve files from the "./models" directory
+	app.Static("/models", "./models")
+	// Add a static fule handler: Serve files from the "./assets" directory
+	app.Static("/demo", "./assets")
 
 	//POST predictedValue method
 	app.Post("/api/post/predict", func(c *fiber.Ctx) error {
@@ -51,8 +55,9 @@ func main() {
 		lastPredictedValue = predictedData.PredictedValue
 
 		newPredictedValue := &initializers.PredictedData{
-			PTimestamp: time.Now(),
-			PValue:     lastPredictedValue,
+			DeviceID:  "potensio-001",
+			Timestamp: time.Now(),
+			PValue:    lastPredictedValue,
 		}
 
 		//Insert the data to the database
@@ -99,6 +104,17 @@ func main() {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Couldn't get data from database"})
 		}
 		return c.JSON(fiber.Map{"status": "success", "data": sensorData})
+	})
+
+	//GET method for predicted data
+	app.Get("/api/get/predict", func(c *fiber.Ctx) error {
+		var predictedData []initializers.PredictedData
+
+		err := initializers.DB.Order("timestamp desc").Find(&predictedData).Error
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Couldn't get data from database"})
+		}
+		return c.JSON(fiber.Map{"status": "success", "data": predictedData})
 	})
 
 	//Database Things
